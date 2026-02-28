@@ -1,0 +1,7 @@
+plugins:
+elementor
+elementor-pro
+genesis-blocks
+premium-addons-for-elementor
+themes:
+genesis-block-theme

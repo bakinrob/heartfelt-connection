@@ -1,0 +1,6 @@
+--e-global-color-1227607:#FFFAEA;
+--e-global-color-9579aa3:#1D2939;
+--e-global-color-accent:#EA7600;
+--e-global-color-primary:#0C111D;
+--e-global-color-secondary:#FFFFFF;
+--e-global-color-text:#344054;
