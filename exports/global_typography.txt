@@ -1,8 +1,0 @@
---e-global-typography-accent-font-family:"Inter";
---e-global-typography-accent-font-weight:500;
---e-global-typography-primary-font-family:"Open Sauce Sans";
---e-global-typography-primary-font-weight:700;
---e-global-typography-secondary-font-family:"Open Sauce Sans";
---e-global-typography-secondary-font-weight:400;
---e-global-typography-text-font-family:"Inter";
---e-global-typography-text-font-weight:400;
