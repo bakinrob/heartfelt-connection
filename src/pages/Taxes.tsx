@@ -1,18 +1,16 @@
 import ServicePage from "./ServicePage";
+import { useI18n } from "@/lib/i18n";
 
-const Taxes = () => (
-  <ServicePage
-    title="Rapport de taxes"
-    subtitle="Taxes de Ventes"
-    description="Analyser et gérer la TPS/TVH et la TVP canadiennes. Nous suivons l'éligibilité pour l'enregistrement de votre entreprise dans les provinces/états concernés et mettons en œuvre les meilleures pratiques."
-    features={[
-      "Gestion complète de la TPS/TVH et TVQ",
-      "Suivi de l'éligibilité à l'enregistrement provincial",
-      "Déclarations de taxes trimestrielles et annuelles",
-      "Optimisation fiscale pour réduire votre charge",
-      "Conformité réglementaire assurée",
-    ]}
-  />
-);
+const Taxes = () => {
+  const { t } = useI18n();
+  return (
+    <ServicePage
+      title={t("service.taxes")}
+      subtitle={t("taxes.subtitle")}
+      description={t("taxes.desc")}
+      features={[t("taxes.f1"), t("taxes.f2"), t("taxes.f3"), t("taxes.f4"), t("taxes.f5")]}
+    />
+  );
+};
 
 export default Taxes;

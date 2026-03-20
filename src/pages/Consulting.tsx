@@ -1,18 +1,16 @@
 import ServicePage from "./ServicePage";
+import { useI18n } from "@/lib/i18n";
 
-const Consulting = () => (
-  <ServicePage
-    title="Services / Conseils"
-    subtitle="Service-Conseil"
-    description="Des conseils stratégiques et un accompagnement personnalisé pour optimiser la gestion financière de votre entreprise. Notre expertise vous aide à prendre les meilleures décisions."
-    features={[
-      "Analyse financière approfondie et recommandations stratégiques",
-      "Optimisation des processus comptables et financiers",
-      "Accompagnement dans la transformation numérique",
-      "Planification budgétaire et prévisionnelle",
-      "Support dans les décisions d'investissement",
-    ]}
-  />
-);
+const Consulting = () => {
+  const { t } = useI18n();
+  return (
+    <ServicePage
+      title={t("service.consulting")}
+      subtitle={t("consulting.subtitle")}
+      description={t("consulting.desc")}
+      features={[t("consulting.f1"), t("consulting.f2"), t("consulting.f3"), t("consulting.f4"), t("consulting.f5")]}
+    />
+  );
+};
 
 export default Consulting;
