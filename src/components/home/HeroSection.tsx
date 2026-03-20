@@ -1,84 +1,106 @@
+import { lazy, Suspense } from "react";
 import ScrambleText from "@/components/animations/ScrambleText";
 import FadeUpBlur from "@/components/animations/FadeUpBlur";
-import { Button } from "@/components/ui/button";
-import { useI18n } from "@/lib/i18n";
-import { ChevronDown, Star } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+
+const FinanceScene = lazy(() => import("./FinanceScene"));
 
 const HeroSection = () => {
-  const { t } = useI18n();
-
   return (
-    <section className="relative bg-gradient-to-br from-cream via-background to-secondary overflow-hidden py-20 md:py-32 min-h-[85vh] flex items-center">
-      {/* Subtle decorative gradient orbs */}
-      <div className="absolute top-20 right-1/4 w-[400px] h-[400px] rounded-full bg-accent/5 blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-[300px] h-[300px] rounded-full bg-primary/5 blur-[80px] pointer-events-none" />
+    <section className="relative min-h-[100svh] flex flex-col items-center justify-center text-center overflow-hidden dot-grid bg-namaca-dark">
+      {/* 3D Background */}
+      <Suspense fallback={null}>
+        <FinanceScene />
+      </Suspense>
 
-      <div className="container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div>
-            {/* Pill badge */}
-            <FadeUpBlur delay={0}>
-              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 backdrop-blur-sm px-4 py-1.5 text-xs font-medium text-muted-foreground mb-6">
-                <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-                {t("hero.title.highlight")} — All-in-One Platform
-              </span>
-            </FadeUpBlur>
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 z-[1] pointer-events-none" style={{
+        background: 'linear-gradient(180deg, rgba(8,12,20,0.4) 0%, rgba(8,12,20,0.15) 40%, rgba(8,12,20,0.75) 100%)'
+      }} />
 
-            {/* Scramble headline */}
-            <ScrambleText
-              text={`${t("hero.title.1")} ${t("hero.title.highlight")} ${t("hero.title.2")}`}
-              as="h1"
-              className="heading-display text-primary mb-0"
-              delay={200}
-              speed={30}
-            />
+      {/* Content */}
+      <div className="relative z-10 px-5 max-w-4xl mx-auto">
+        {/* Eyebrow pill */}
+        <FadeUpBlur delay={0}>
+          <span className="inline-flex items-center gap-2 rounded-full border border-namaca-orange/30 bg-namaca-orange/[0.08] px-5 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.34em] text-namaca-orange mb-10 font-body">
+            ✦ Montreal's Premier Cloud Accounting Firm
+          </span>
+        </FadeUpBlur>
 
-            {/* Orange underline accent */}
-            <FadeUpBlur delay={0.6}>
-              <div className="h-[5px] w-32 bg-accent rounded-full mt-4 mb-8" />
-            </FadeUpBlur>
+        {/* Headline */}
+        <ScrambleText
+          text="Your finances."
+          as="h1"
+          className="font-display text-white mb-0"
+          delay={200}
+          speed={30}
+        />
+        <ScrambleText
+          text="Automated."
+          as="h1"
+          className="font-display text-white/50 mb-0"
+          delay={600}
+          speed={30}
+        />
+        <ScrambleText
+          text="Elevated."
+          as="h1"
+          className="font-display text-white/50 mb-0"
+          delay={1000}
+          speed={30}
+        />
 
-            {/* Subtitle */}
-            <FadeUpBlur delay={0.4}>
-              <p className="text-muted-foreground text-lg leading-relaxed max-w-lg">
-                {t("hero.desc")}
-              </p>
-            </FadeUpBlur>
+        <style>{`
+          .font-display { font-size: clamp(3.2rem, 8vw, 7.5rem); line-height: 0.92; letter-spacing: -0.04em; font-weight: 600; }
+        `}</style>
 
-            {/* CTA + social proof */}
-            <FadeUpBlur delay={0.6} className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-5">
-              <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-8 text-base shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-all hover:scale-[1.03]">
-                <a href="#book-now">{t("hero.cta")}</a>
-              </Button>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <div className="flex">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-3.5 w-3.5 fill-accent text-accent" />
-                  ))}
-                </div>
-                <span>5.0 · 150+ clients</span>
+        {/* Subtitle */}
+        <FadeUpBlur delay={0.6}>
+          <p className="text-namaca-muted text-lg max-w-lg mx-auto mt-8 leading-relaxed font-body">
+            CFO-level intelligence at bookkeeper prices.
+            100% cloud-based, paperless, and built for
+            Canadian businesses that refuse to&nbsp;stay&nbsp;small.
+          </p>
+        </FadeUpBlur>
+
+        {/* Floating stat badges */}
+        <FadeUpBlur delay={0.8}>
+          <div className="flex flex-wrap justify-center gap-3 mt-10">
+            {[
+              { num: "1,500+", label: "Healthcare Clients" },
+              { num: "100%", label: "Cloud-Based" },
+              { num: "CFO-Level", label: "At Every Plan" },
+            ].map((badge) => (
+              <div key={badge.label} className="glass-card rounded-2xl px-6 py-4 text-center">
+                <div className="font-display text-namaca-orange text-[1.75rem] leading-none">{badge.num}</div>
+                <div className="text-namaca-muted text-[0.68rem] uppercase tracking-[0.12em] mt-1 font-body">{badge.label}</div>
               </div>
-            </FadeUpBlur>
+            ))}
           </div>
+        </FadeUpBlur>
 
-          {/* Hero image with floating effect */}
-          <FadeUpBlur delay={0.3} className="relative">
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-br from-accent/10 via-transparent to-primary/5 rounded-3xl blur-2xl" />
-              <img
-                src="https://namaca.ca/wp-content/uploads/2024/09/Frame-1000003816.png"
-                alt="Professional accounting services"
-                className="relative rounded-3xl object-cover w-full shadow-card"
-                loading="eager"
-              />
-            </div>
-          </FadeUpBlur>
-        </div>
+        {/* CTA row */}
+        <FadeUpBlur delay={1}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
+            <a
+              href="#book-now"
+              className="bg-namaca-orange text-white rounded-full px-8 py-4 font-semibold text-sm uppercase tracking-[0.14em] hover:bg-namaca-glow transition-all hover:scale-[1.03] font-body"
+            >
+              Start Free Consultation →
+            </a>
+            <a
+              href="#services"
+              className="liquid-glass rounded-full px-8 py-4 text-white text-sm font-semibold uppercase tracking-[0.14em] hover:scale-[1.03] transition-transform font-body"
+            >
+              See How It Works
+            </a>
+          </div>
+        </FadeUpBlur>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground/50">
-        <span className="text-[10px] uppercase tracking-[0.34em] font-medium">Scroll</span>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/30 z-10">
+        <span className="text-[10px] uppercase tracking-[0.34em] font-medium font-body">Scroll</span>
         <ChevronDown className="h-4 w-4 animate-bounce" />
       </div>
     </section>

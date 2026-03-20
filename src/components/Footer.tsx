@@ -1,59 +1,56 @@
 import { Link } from "react-router-dom";
-import { Mail, MapPin, Phone } from "lucide-react";
-import { useI18n } from "@/lib/i18n";
 
-const Footer = () => {
-  const { t } = useI18n();
-
-  return (
-    <footer className="bg-primary text-primary-foreground">
-      <div className="container py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-          <div className="md:col-span-2 space-y-4">
-            <img
-              src="https://namaca.ca/wp-content/uploads/2024/09/base_logo_transparent_background-eps-1.svg"
-              alt="Namaca"
-              className="h-8 brightness-0 invert"
-            />
-            <div className="space-y-2 text-sm opacity-80">
-              <p className="flex items-center gap-2"><Mail className="h-4 w-4 text-accent" /> info@namaca.com</p>
-              <p className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-accent mt-0.5" />
-                <span>5915 Rue De Jumonville<br />Montréal, Québec H1M1R2<br />Canada</span>
-              </p>
-              <p className="flex items-center gap-2"><Phone className="h-4 w-4 text-accent" /> +1 (514) 819-1513</p>
-            </div>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">{t("footer.nav")}</h4>
-            <ul className="space-y-2 text-sm opacity-80">
-              <li><Link to="/" className="hover:text-accent transition-colors">{t("nav.home")}</Link></li>
-              <li><Link to="/expertise" className="hover:text-accent transition-colors">{t("nav.expertise")}</Link></li>
-              <li><a href="/#services" className="hover:text-accent transition-colors">{t("footer.ourServices")}</a></li>
-              <li><Link to="/resources" className="hover:text-accent transition-colors">{t("nav.resources")}</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">{t("nav.services")}</h4>
-            <ul className="space-y-2 text-sm opacity-80">
-              <li><Link to="/bookkeeping" className="hover:text-accent transition-colors">{t("service.bookkeeping")}</Link></li>
-              <li><Link to="/payroll" className="hover:text-accent transition-colors">{t("service.payroll")}</Link></li>
-              <li><Link to="/taxes" className="hover:text-accent transition-colors">{t("service.taxes")}</Link></li>
-              <li><Link to="/fractional-cfo" className="hover:text-accent transition-colors">{t("service.cfo")}</Link></li>
-              <li><Link to="/accounts-payable" className="hover:text-accent transition-colors">{t("service.ap")}</Link></li>
-              <li><Link to="/accounts-receivable" className="hover:text-accent transition-colors">{t("service.ar")}</Link></li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-12 pt-6 border-t border-primary-foreground/10 text-center text-xs opacity-60">
-          © {new Date().getFullYear()} Namaca, {t("footer.rights")}
+const Footer = () => (
+  <footer className="bg-namaca-navy border-t border-white/[0.06]">
+    <div className="container max-w-7xl py-16 px-6">
+      {/* Top */}
+      <div className="flex flex-col md:flex-row justify-between items-start gap-10 mb-12">
+        <div>
+          <span className="font-display italic text-2xl text-white">Namaca<span className="text-namaca-orange">.</span></span>
+          <p className="text-white/40 text-sm font-body mt-2">Tomorrow's Trusted Advisor, Today</p>
         </div>
       </div>
-    </footer>
-  );
-};
+
+      {/* Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+        <div>
+          <h4 className="text-white/60 text-xs uppercase tracking-[0.2em] font-body font-semibold mb-4">Services</h4>
+          <ul className="space-y-2 text-sm font-body">
+            {["Bookkeeping", "Payroll", "AP/AR", "Fractional CFO", "Tax", "Healthcare"].map((s) => (
+              <li key={s}><Link to="/" className="text-white/50 hover:text-namaca-orange transition-colors">{s}</Link></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-white/60 text-xs uppercase tracking-[0.2em] font-body font-semibold mb-4">Company</h4>
+          <ul className="space-y-2 text-sm font-body">
+            {[
+              { label: "About", href: "/expertise" },
+              { label: "Resources", href: "/resources" },
+              { label: "Blog", href: "/resources" },
+              { label: "Contact", href: "#book-now" },
+            ].map((l) => (
+              <li key={l.label}><a href={l.href} className="text-white/50 hover:text-namaca-orange transition-colors">{l.label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-white/60 text-xs uppercase tracking-[0.2em] font-body font-semibold mb-4">Contact</h4>
+          <div className="space-y-2 text-sm font-body text-white/50">
+            <p>info@namaca.com</p>
+            <p>+1 (514) 819-1513</p>
+            <p>5915 Rue De Jumonville<br />Montreal QC, Canada</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom */}
+      <div className="border-t border-white/[0.06] pt-8 flex flex-col md:flex-row justify-between items-center text-white/25 text-sm font-body">
+        <span>© {new Date().getFullYear()} Namaca Inc. All rights reserved.</span>
+        <span>Montreal, Quebec, Canada</span>
+      </div>
+    </div>
+  </footer>
+);
 
 export default Footer;
