@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Manrope", "Inter", "system-ui", "sans-serif"],
-        display: ["Instrument Serif", "Georgia", "serif"],
-        heading: ["Inter", "system-ui", "sans-serif"],
+        sans: ["Manrope", "sans-serif"],
+        display: ["Fraunces", "Georgia", "serif"],
+        body: ["Manrope", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -57,6 +57,11 @@ export default {
           foreground: "hsl(var(--navy-foreground))",
         },
         cream: "hsl(var(--cream))",
+        "namaca-dark": "#080C14",
+        "namaca-navy": "#0C111D",
+        "namaca-orange": "#EA7600",
+        "namaca-glow": "#FF9A3C",
+        "namaca-muted": "#94A3B8",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

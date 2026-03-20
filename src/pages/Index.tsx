@@ -1,12 +1,11 @@
 import Layout from "@/components/Layout";
 import HeroSection from "@/components/home/HeroSection";
-import WhyChooseUsTabs from "@/components/home/WhyChooseUsTabs";
-import ServicesGrid from "@/components/home/ServicesGrid";
-import WhyChooseUsNumbered from "@/components/home/WhyChooseUsNumbered";
-import ExpertiseCounters from "@/components/home/ExpertiseCounters";
-import Testimonials from "@/components/home/Testimonials";
-import Partners from "@/components/home/Partners";
-import ContactForm from "@/components/home/ContactForm";
+import TrustStrip from "@/components/home/TrustStrip";
+import ServicesSection from "@/components/home/ServicesSection";
+import HealthcareSection from "@/components/home/HealthcareSection";
+import HowItWorks from "@/components/home/HowItWorks";
+import TestimonialsSection from "@/components/home/TestimonialsSection";
+import CTASection from "@/components/home/CTASection";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 
 const Index = () => {
@@ -15,13 +14,12 @@ const Index = () => {
   return (
     <Layout>
       <HeroSection />
-      <WhyChooseUsTabs />
-      <ServicesGrid />
-      <WhyChooseUsNumbered />
-      <ExpertiseCounters />
-      <Testimonials />
-      <Partners />
-      <ContactForm />
+      <TrustStrip />
+      <ServicesSection />
+      <HealthcareSection />
+      <HowItWorks />
+      <TestimonialsSection />
+      <CTASection />
     </Layout>
   );
 };
