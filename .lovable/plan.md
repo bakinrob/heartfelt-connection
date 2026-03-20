@@ -1,68 +1,101 @@
 
 
-## Plan: Rebuild Namaca.ca as a React/Lovable App
+## Plan: Motion & Animation System Overhaul
 
-### What is Namaca?
-Namaca is a Canadian accounting firm (based in Montreal) serving SMEs and startups. The current site is a WordPress/Elementor site in French, with services like bookkeeping, payroll, taxes, fractional CFO, AP/AR, and consulting.
+### What Changes
+Transform the current site from basic Framer Motion fade-ins into a cinematic, premium animation experience inspired by the Fintiq/Ledger references and the detailed animation brief.
 
-### Brand Tokens
-- **Primary dark**: `#0C111D`
-- **Secondary**: `#FFFFFF`
-- **Text**: `#344054`
-- **Accent (orange)**: `#EA7600`
-- **Dark blue-gray**: `#1D2939`
-- **Light yellow**: `#FFFAEA`
-- **Fonts**: "Open Sauce Sans" (headings, 700), "Inter" (body, 400/500)
+### New Dependencies
+- `lenis` — smooth inertia scrolling
+- `gsap` — ScrollTrigger-based reveals (more performant than Framer Motion for scroll animations)
 
-### Site Structure (10 pages)
-1. **Home** (Accueil) - hero, why choose us, services grid, why choose us numbered list, sector expertise with counters, testimonials carousel, partners, contact form, footer
-2. **Expertise** - sector expertise page
-3. **Bookkeeping** (Tenue de Livres)
-4. **Payroll** (Traitement de la Paie)
-5. **Taxes** (Taxes de Ventes)
-6. **Fractional CFO**
-7. **Accounts Payable** (Comptes Payables)
-8. **Accounts Receivable** (Comptes Recevables)
-9. **Consulting** (Service-Conseil)
-10. **Resources** - blog listing page
+### New Files
 
-### Implementation Steps
+**1. `src/components/animations/StaggeredFade.tsx`**
+Character-by-character heading reveal. Splits text into `<motion.span>` elements, each with `delay: i * 0.07s`. Uses `useInView` to trigger only when scrolled into view.
 
-**Step 1: Design system and layout components**
-- Update CSS variables to match Namaca brand colors
-- Add Google Fonts (Inter; Open Sauce Sans or fallback to similar)
-- Create shared `Navbar` component with logo, nav links (Accueil, Expertise, Services dropdown, Ressources), and "Contactez-nous" CTA button
-- Create shared `Footer` component with contact info, social links, and site nav
+**2. `src/components/animations/FadeUpBlur.tsx`**
+Wrapper for paragraphs/CTAs. Animates from `opacity: 0, y: 20, blur(8px)` to clear. Accepts `delay` prop for sequencing.
 
-**Step 2: Build the Home page**
-- Hero section: heading with orange underline on "Comptabilite", subtitle text, CTA button, image collage on the right
-- "Pourquoi nous choisir?" tabbed section with 4 tabs (Bureau propre, Cloud, Clarte, Au-dela)
-- Services grid: 7 service cards with icons, titles, descriptions, and "Pour en savoir plus" links
-- "Why choose us?" numbered scroll section (6 items: Online & Tech-Driven, No Re-training, Gain Clarity, Beyond Bookkeeping, Expert Solutions, Value Innovation)
-- Sector expertise with animated counters (4 stats)
-- Client testimonials carousel
-- Partners logo row (Xero, DEXTools, etc.)
-- Contact form section with name, email, phone, message fields
+**3. `src/components/animations/FadeInScale.tsx`**
+Wrapper for cards/images. Animates from `opacity: 0, scale: 0.9` to full. Accepts `index` and `staggerDelay` props for grid staggering.
 
-**Step 3: Build service pages**
-- Create a reusable `ServicePage` layout component (hero banner, content sections, CTA)
-- Build out Bookkeeping, Payroll, Taxes, Fractional CFO, AP, AR, Consulting pages using content from `pages_full.json`
+**4. `src/components/animations/ScrambleText.tsx`**
+Hero "decryption" effect. Characters cycle through random alphanumerics via `requestAnimationFrame` before resolving to real letters. Accepts `delay` prop for staggering multiple lines.
 
-**Step 4: Build Expertise and Resources pages**
-- Expertise page with sector-specific content
-- Resources/blog listing page showing the 18 posts from `posts_full.json` as cards
+**5. `src/hooks/useSmoothScroll.ts`**
+Lenis initialization hook with `duration: 1.2`, exponential easing, cleanup on unmount.
 
-**Step 5: Routing and polish**
-- Wire up all routes in `App.tsx`
-- Images will reference `namaca.ca` asset URLs directly (they're publicly hosted)
-- Add smooth scroll for `#book-now` anchor links
-- Responsive design throughout
-- Fade-in animations matching the original site
+### Modified Files
+
+**6. `src/index.css`**
+- Add liquid-glass button utilities (backdrop-blur, gradient border mask via `::before`)
+- Add 3D perspective tilt base styles
+- Add cinematic typography classes: fluid `clamp()` sizing, `leading-[0.95]`, `tracking-[-0.04em]`
+- Add section label utility: `text-xs uppercase tracking-[0.34em]` muted color
+
+**7. `src/components/home/HeroSection.tsx`**
+- Replace basic `motion.div` fade with `ScrambleText` for the headline
+- Add pill badge above headline ("All-in-One Accounting" style)
+- Add scroll indicator at bottom (small "Scroll" label + bouncing ChevronDown)
+- Sequence: ScrambleText title → FadeUpBlur subtitle (0.3s) → FadeUpBlur CTA (0.5s)
+- Subtle gradient background wash instead of flat cream
+
+**8. `src/components/home/ServicesGrid.tsx`**
+- Replace `motion.div` cards with `FadeInScale` wrappers (index-based stagger)
+- Add 3D perspective tilt on hover via mouse position tracking
+- Liquid-glass hover effect on cards
+- Rounded icon containers with light accent background
+
+**9. `src/components/home/WhyChooseUsTabs.tsx`**
+- `StaggeredFade` for section heading
+- `FadeUpBlur` for tab content transitions
+- Larger tab pills with smoother active transitions
+
+**10. `src/components/home/WhyChooseUsNumbered.tsx`**
+- `StaggeredFade` for heading
+- Left accent line on hover for each item
+- GSAP ScrollTrigger for staggered item reveals
+
+**11. `src/components/home/ExpertiseCounters.tsx`**
+- `StaggeredFade` for heading
+- `FadeInScale` for each counter card
+
+**12. `src/components/home/Testimonials.tsx`**
+- Add star ratings above quotes
+- `FadeUpBlur` for quote transitions
+- Soft card shadow upgrade
+
+**13. `src/components/home/Partners.tsx`**
+- Auto-scrolling infinite carousel (duplicate array, smooth scroll loop)
+- Replace static grid with continuous horizontal scroll
+
+**14. `src/components/home/ContactForm.tsx`**
+- `StaggeredFade` heading
+- `FadeUpBlur` for form fields
+- Input focus glow effect
+- Glass-morphism card style
+
+**15. `src/components/Navbar.tsx`**
+- Enhanced frosted-glass effect with increased blur
+- Liquid-glass outline CTA button style
+
+**16. `src/pages/Index.tsx`**
+- Initialize Lenis smooth scroll via `useSmoothScroll` hook
+- Initialize GSAP ScrollTrigger for section reveals
+
+### Animation Rhythm (Every Section)
+```text
+StaggeredFade → title (char-by-char)
+FadeUpBlur    → body text (delay 0.3s)
+FadeUpBlur    → CTA/action (delay 0.5s)
+FadeInScale   → cards/images (index * 0.1s stagger)
+```
 
 ### Technical Details
-- All images hotlinked from `namaca.ca/wp-content/uploads/` (already public CDN)
-- Contact form will be UI-only initially (no backend); can add Supabase later
-- Blog posts rendered statically from JSON data (no CMS)
-- Open Sauce Sans loaded via `@font-face` if available, or fallback to a similar geometric sans
-- Framer Motion for scroll animations and counter animations
+- GSAP + ScrollTrigger dynamically imported to keep bundle lean
+- Lenis cleaned up on unmount to prevent memory leaks
+- All existing i18n keys and content preserved
+- 3D tilt uses `onMouseMove` handler calculating rotateX/rotateY from cursor position relative to card center
+- Liquid-glass buttons use `backdrop-filter: blur(4px)` + `::before` with `mask-composite: exclude` for gradient border
 
