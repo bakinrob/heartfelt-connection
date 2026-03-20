@@ -1,22 +1,26 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const services = [
-  { label: "Comptabilité", href: "/bookkeeping" },
-  { label: "Service de paie", href: "/payroll" },
-  { label: "Rapport de taxes", href: "/taxes" },
-  { label: "Fractional CFO", href: "/fractional-cfo" },
-  { label: "Comptes fournisseurs", href: "/accounts-payable" },
-  { label: "Comptes clients", href: "/accounts-receivable" },
-  { label: "Services / Conseils", href: "/consulting" },
-];
+import { useI18n } from "@/lib/i18n";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const location = useLocation();
+  const { lang, setLang, t } = useI18n();
+
+  const services = [
+    { label: t("service.bookkeeping"), href: "/bookkeeping" },
+    { label: t("service.payroll"), href: "/payroll" },
+    { label: t("service.taxes"), href: "/taxes" },
+    { label: t("service.cfo"), href: "/fractional-cfo" },
+    { label: t("service.ap"), href: "/accounts-payable" },
+    { label: t("service.ar"), href: "/accounts-receivable" },
+    { label: t("service.consulting"), href: "/consulting" },
+  ];
+
+  const toggleLang = () => setLang(lang === "fr" ? "en" : "fr");
 
   return (
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border">
@@ -35,29 +39,25 @@ const Navbar = () => {
             to="/"
             className={`text-sm font-medium transition-colors hover:text-accent ${location.pathname === "/" ? "text-accent" : "text-foreground"}`}
           >
-            Accueil
+            {t("nav.home")}
           </Link>
           <Link
             to="/expertise"
             className={`text-sm font-medium transition-colors hover:text-accent ${location.pathname === "/expertise" ? "text-accent" : "text-foreground"}`}
           >
-            Expertise
+            {t("nav.expertise")}
           </Link>
 
-          {/* Services Dropdown */}
           <div className="relative group">
             <button
               className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-accent transition-colors"
               onClick={() => setServicesOpen(!servicesOpen)}
               onMouseEnter={() => setServicesOpen(true)}
             >
-              Services <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
+              {t("nav.services")} <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
             </button>
             {servicesOpen && (
-              <div
-                className="absolute top-full left-0 pt-2"
-                onMouseLeave={() => setServicesOpen(false)}
-              >
+              <div className="absolute top-full left-0 pt-2" onMouseLeave={() => setServicesOpen(false)}>
                 <div className="bg-card rounded-lg shadow-lg border border-border py-2 min-w-[220px]">
                   {services.map((s) => (
                     <Link
@@ -78,30 +78,35 @@ const Navbar = () => {
             to="/resources"
             className={`text-sm font-medium transition-colors hover:text-accent ${location.pathname === "/resources" ? "text-accent" : "text-foreground"}`}
           >
-            Ressources
+            {t("nav.resources")}
           </Link>
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-3">
+          <button
+            onClick={toggleLang}
+            className="flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-accent transition-colors px-3 py-1.5 rounded-full border border-border hover:border-accent"
+          >
+            <Globe className="h-3.5 w-3.5" />
+            {lang === "fr" ? "EN" : "FR"}
+          </button>
           <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-6">
-            <a href="/#book-now">Contactez-nous</a>
+            <a href="/#book-now">{t("nav.contact")}</a>
           </Button>
         </div>
 
-        {/* Mobile toggle */}
         <button className="md:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
           {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
-      {/* Mobile Nav */}
       {mobileOpen && (
         <div className="md:hidden bg-card border-t border-border p-4 space-y-3">
-          <Link to="/" className="block py-2 text-sm font-medium" onClick={() => setMobileOpen(false)}>Accueil</Link>
-          <Link to="/expertise" className="block py-2 text-sm font-medium" onClick={() => setMobileOpen(false)}>Expertise</Link>
+          <Link to="/" className="block py-2 text-sm font-medium" onClick={() => setMobileOpen(false)}>{t("nav.home")}</Link>
+          <Link to="/expertise" className="block py-2 text-sm font-medium" onClick={() => setMobileOpen(false)}>{t("nav.expertise")}</Link>
           <div>
             <button className="flex items-center gap-1 py-2 text-sm font-medium w-full" onClick={() => setServicesOpen(!servicesOpen)}>
-              Services <ChevronDown className={`h-3.5 w-3.5 transition-transform ${servicesOpen ? "rotate-180" : ""}`} />
+              {t("nav.services")} <ChevronDown className={`h-3.5 w-3.5 transition-transform ${servicesOpen ? "rotate-180" : ""}`} />
             </button>
             {servicesOpen && (
               <div className="pl-4 space-y-1">
@@ -113,9 +118,16 @@ const Navbar = () => {
               </div>
             )}
           </div>
-          <Link to="/resources" className="block py-2 text-sm font-medium" onClick={() => setMobileOpen(false)}>Ressources</Link>
+          <Link to="/resources" className="block py-2 text-sm font-medium" onClick={() => setMobileOpen(false)}>{t("nav.resources")}</Link>
+          <button
+            onClick={toggleLang}
+            className="flex items-center gap-1.5 text-sm font-medium py-2"
+          >
+            <Globe className="h-3.5 w-3.5" />
+            {lang === "fr" ? "Switch to English" : "Passer au Français"}
+          </button>
           <Button asChild className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-full">
-            <a href="/#book-now" onClick={() => setMobileOpen(false)}>Contactez-nous</a>
+            <a href="/#book-now" onClick={() => setMobileOpen(false)}>{t("nav.contact")}</a>
           </Button>
         </div>
       )}

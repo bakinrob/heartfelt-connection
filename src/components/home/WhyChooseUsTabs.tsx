@@ -1,55 +1,41 @@
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-const tabs = [
-  {
-    id: "bureau",
-    label: "Bureau propre VS encombré",
-    title: "Bureau propre vs encombré",
-    points: [
-      "Remplacer les opérations traditionnelles basées sur le papier par des flux de travail numériques rationalisés",
-      "Exploiter l'infrastructure basée sur le cloud pour une gestion améliorée des documents",
-      "Accédez à des données financières complètes via des interfaces numériques intuitives.",
-      "Maintenez une organisation de l'espace de travail impeccable grâce à des opérations sans papier.",
-      "Projetez un professionnalisme élevé avec des pratiques comptables modernes.",
-    ],
-    image: "https://namaca.ca/wp-content/uploads/2024/11/Frame-1000003751-1.png",
-  },
-  {
-    id: "cloud",
-    label: "Accès complet dans le cloud",
-    title: "Accès complet dans le cloud",
-    points: [
-      "Réduisez la latence opérationnelle grâce au traitement natif du cloud.",
-      "Exécutez une synchronisation complète des données sur des plateformes intégrées.",
-      "Mettez en œuvre des mesures de sécurité de niveau entreprise pour les données financières confidentielles.",
-      "Optimisez l'allocation des ressources grâce à une architecture cloud centralisée.",
-    ],
-    image: "https://namaca.ca/wp-content/uploads/2024/11/Frame-1000003751-2.png",
-  },
-  {
-    id: "clarte",
-    label: "Gagner en clarté",
-    title: "Gagnez en clarté",
-    points: [
-      "Notre système utilise le tableau de bord Xero pour des informations financières en temps réel, contrairement aux méthodes de reporting traditionnelles basées sur le papier utilisées par d'autres.",
-      "Notre système basé sur le cloud garantit que les informations sont accessibles de n'importe où, éliminant ainsi les limitations d'un accès uniquement au bureau.",
-    ],
-    image: "https://namaca.ca/wp-content/uploads/2024/11/Frame-1000003751-3.png",
-  },
-  {
-    id: "au-dela",
-    label: "Au-delà de la comptabilité",
-    title: "Au-delà de la comptabilité",
-    points: [
-      "Nous simplifions la communication en enregistrant les solutions et en les envoyant via Loom, éliminant ainsi le besoin de réunions chronophages et permettant une plus grande flexibilité.",
-      "Les rapports du CFO sont livrés via des enregistrements Loom, garantissant des mises à jour claires et efficaces sans les tracas de la planification ou de l'attente des réunions.",
-    ],
-    image: "https://namaca.ca/wp-content/uploads/2024/11/Frame-1000003751-4.png",
-  },
-];
+import { useI18n } from "@/lib/i18n";
 
 const WhyChooseUsTabs = () => {
+  const { t } = useI18n();
+
+  const tabs = [
+    {
+      id: "bureau",
+      label: t("why.tab1.label"),
+      title: t("why.tab1.title"),
+      points: [t("why.tab1.p1"), t("why.tab1.p2"), t("why.tab1.p3"), t("why.tab1.p4"), t("why.tab1.p5")],
+      image: "https://namaca.ca/wp-content/uploads/2024/11/Frame-1000003751-1.png",
+    },
+    {
+      id: "cloud",
+      label: t("why.tab2.label"),
+      title: t("why.tab2.title"),
+      points: [t("why.tab2.p1"), t("why.tab2.p2"), t("why.tab2.p3"), t("why.tab2.p4")],
+      image: "https://namaca.ca/wp-content/uploads/2024/11/Frame-1000003751-2.png",
+    },
+    {
+      id: "clarte",
+      label: t("why.tab3.label"),
+      title: t("why.tab3.title"),
+      points: [t("why.tab3.p1"), t("why.tab3.p2")],
+      image: "https://namaca.ca/wp-content/uploads/2024/11/Frame-1000003751-3.png",
+    },
+    {
+      id: "au-dela",
+      label: t("why.tab4.label"),
+      title: t("why.tab4.title"),
+      points: [t("why.tab4.p1"), t("why.tab4.p2")],
+      image: "https://namaca.ca/wp-content/uploads/2024/11/Frame-1000003751-4.png",
+    },
+  ];
+
   return (
     <section className="py-20 md:py-28">
       <div className="container">
@@ -59,7 +45,7 @@ const WhyChooseUsTabs = () => {
           viewport={{ once: true }}
           className="text-3xl md:text-4xl font-bold text-center text-primary mb-12"
         >
-          Pourquoi nous choisir ?
+          {t("why.title")}
         </motion.h2>
 
         <Tabs defaultValue="bureau" className="w-full">
@@ -95,12 +81,7 @@ const WhyChooseUsTabs = () => {
                   </ul>
                 </div>
                 <div className="flex justify-center">
-                  <img
-                    src={tab.image}
-                    alt={tab.title}
-                    className="rounded-2xl max-h-[400px] object-contain"
-                    loading="lazy"
-                  />
+                  <img src={tab.image} alt={tab.title} className="rounded-2xl max-h-[400px] object-contain" loading="lazy" />
                 </div>
               </motion.div>
             </TabsContent>

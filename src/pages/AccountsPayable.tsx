@@ -1,18 +1,16 @@
 import ServicePage from "./ServicePage";
+import { useI18n } from "@/lib/i18n";
 
-const AccountsPayable = () => (
-  <ServicePage
-    title="Comptes fournisseurs"
-    subtitle="Comptes Payables"
-    description="Technology has revolutionized accounts payables, eliminating the time wasted on paper invoices and payment reminders. Namaca's expert AP team streamlines your payment processes."
-    features={[
-      "Automated invoice processing and approval workflows",
-      "Vendor management and payment scheduling",
-      "Real-time AP aging reports",
-      "Duplicate payment detection and prevention",
-      "Seamless integration with your accounting platform",
-    ]}
-  />
-);
+const AccountsPayable = () => {
+  const { t } = useI18n();
+  return (
+    <ServicePage
+      title={t("service.ap")}
+      subtitle={t("ap.subtitle")}
+      description={t("ap.desc")}
+      features={[t("ap.f1"), t("ap.f2"), t("ap.f3"), t("ap.f4"), t("ap.f5")]}
+    />
+  );
+};
 
 export default AccountsPayable;

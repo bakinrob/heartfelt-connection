@@ -1,19 +1,16 @@
 import ServicePage from "./ServicePage";
+import { useI18n } from "@/lib/i18n";
 
-const FractionalCFO = () => (
-  <ServicePage
-    title="Fractional CFO"
-    subtitle="Direction financière"
-    description="As your company grows, navigating complex financial statements can be daunting. That's when a fractional CFO steps in. Our skilled fractional CFOs leverage their expertise to guide your financial strategy."
-    features={[
-      "Strategic financial planning and analysis",
-      "Cash flow management and forecasting",
-      "KPI dashboard for real-time business insights",
-      "Investor-ready financial reporting",
-      "CFO-level guidance at a fraction of the cost",
-      "Reports delivered via Loom for maximum clarity",
-    ]}
-  />
-);
+const FractionalCFO = () => {
+  const { t } = useI18n();
+  return (
+    <ServicePage
+      title={t("service.cfo")}
+      subtitle={t("cfo.subtitle")}
+      description={t("cfo.desc")}
+      features={[t("cfo.f1"), t("cfo.f2"), t("cfo.f3"), t("cfo.f4"), t("cfo.f5"), t("cfo.f6")]}
+    />
+  );
+};
 
 export default FractionalCFO;
