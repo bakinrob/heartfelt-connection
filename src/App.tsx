@@ -3,8 +3,17 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index.tsx";
-import NotFound from "./pages/NotFound.tsx";
+import Index from "./pages/Index";
+import Expertise from "./pages/Expertise";
+import Bookkeeping from "./pages/Bookkeeping";
+import Payroll from "./pages/Payroll";
+import Taxes from "./pages/Taxes";
+import FractionalCFO from "./pages/FractionalCFO";
+import AccountsPayable from "./pages/AccountsPayable";
+import AccountsReceivable from "./pages/AccountsReceivable";
+import Consulting from "./pages/Consulting";
+import Resources from "./pages/Resources";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +25,15 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/expertise" element={<Expertise />} />
+          <Route path="/bookkeeping" element={<Bookkeeping />} />
+          <Route path="/payroll" element={<Payroll />} />
+          <Route path="/taxes" element={<Taxes />} />
+          <Route path="/fractional-cfo" element={<FractionalCFO />} />
+          <Route path="/accounts-payable" element={<AccountsPayable />} />
+          <Route path="/accounts-receivable" element={<AccountsReceivable />} />
+          <Route path="/consulting" element={<Consulting />} />
+          <Route path="/resources" element={<Resources />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
