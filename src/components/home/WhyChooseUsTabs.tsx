@@ -1,6 +1,8 @@
-import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useI18n } from "@/lib/i18n";
+import StaggeredFade from "@/components/animations/StaggeredFade";
+import FadeUpBlur from "@/components/animations/FadeUpBlur";
+import FadeInScale from "@/components/animations/FadeInScale";
 
 const WhyChooseUsTabs = () => {
   const { t } = useI18n();
@@ -37,53 +39,49 @@ const WhyChooseUsTabs = () => {
   ];
 
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-24 md:py-32">
       <div className="container">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-3xl md:text-4xl font-bold text-center text-primary mb-12"
-        >
-          {t("why.title")}
-        </motion.h2>
+        <span className="section-label text-center">{t("why.title")}</span>
+        <StaggeredFade
+          text={t("why.title")}
+          as="h2"
+          className="text-3xl md:text-4xl font-bold text-center text-primary mb-12 font-heading"
+          charDelay={0.03}
+        />
 
         <Tabs defaultValue="bureau" className="w-full">
-          <TabsList className="w-full flex flex-wrap justify-center gap-2 bg-transparent h-auto mb-10">
-            {tabs.map((tab) => (
-              <TabsTrigger
-                key={tab.id}
-                value={tab.id}
-                className="rounded-full px-5 py-2.5 text-sm data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-none border border-border data-[state=active]:border-accent"
-              >
-                {tab.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          <FadeUpBlur delay={0.2}>
+            <TabsList className="w-full flex flex-wrap justify-center gap-2 bg-transparent h-auto mb-10">
+              {tabs.map((tab) => (
+                <TabsTrigger
+                  key={tab.id}
+                  value={tab.id}
+                  className="rounded-full px-6 py-3 text-sm font-medium data-[state=active]:bg-accent data-[state=active]:text-accent-foreground data-[state=active]:shadow-lg data-[state=active]:shadow-accent/20 border border-border data-[state=active]:border-accent transition-all duration-300"
+                >
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </FadeUpBlur>
 
           {tabs.map((tab) => (
             <TabsContent key={tab.id} value={tab.id}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center"
-              >
-                <div>
-                  <h3 className="text-2xl font-bold text-primary mb-6">{tab.title}</h3>
-                  <ul className="space-y-3">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <FadeUpBlur delay={0.1}>
+                  <h3 className="text-2xl font-bold text-primary mb-6 font-heading">{tab.title}</h3>
+                  <ul className="space-y-4">
                     {tab.points.map((point, i) => (
                       <li key={i} className="flex items-start gap-3 text-muted-foreground">
-                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-accent shrink-0" />
-                        {point}
+                        <span className="mt-2 h-2 w-2 rounded-full bg-accent shrink-0" />
+                        <span className="leading-relaxed">{point}</span>
                       </li>
                     ))}
                   </ul>
-                </div>
-                <div className="flex justify-center">
-                  <img src={tab.image} alt={tab.title} className="rounded-2xl max-h-[400px] object-contain" loading="lazy" />
-                </div>
-              </motion.div>
+                </FadeUpBlur>
+                <FadeInScale delay={0.2}>
+                  <img src={tab.image} alt={tab.title} className="rounded-3xl max-h-[400px] object-contain shadow-card" loading="lazy" />
+                </FadeInScale>
+              </div>
             </TabsContent>
           ))}
         </Tabs>

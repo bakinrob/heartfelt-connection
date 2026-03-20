@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { useRef, MouseEvent } from "react";
 import { Calculator, Receipt, FileText, TrendingUp, CreditCard, Users, Lightbulb } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-
-const containerVariants = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
-const cardVariants = { hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } };
+import StaggeredFade from "@/components/animations/StaggeredFade";
+import FadeInScale from "@/components/animations/FadeInScale";
 
 const ServicesGrid = () => {
   const { t } = useI18n();
@@ -20,32 +19,66 @@ const ServicesGrid = () => {
   ];
 
   return (
-    <section id="services" className="py-20 md:py-28 bg-card">
+    <section id="services" className="py-24 md:py-32 bg-card">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           <div className="hidden lg:block lg:col-span-3">
-            <img src="https://namaca.ca/wp-content/uploads/2024/09/6782-1-1.png" alt="Accounting professional" className="rounded-2xl object-cover h-full w-full" loading="lazy" />
+            <FadeInScale>
+              <img src="https://namaca.ca/wp-content/uploads/2024/09/6782-1-1.png" alt="Accounting professional" className="rounded-3xl object-cover h-full w-full shadow-card" loading="lazy" />
+            </FadeInScale>
           </div>
           <div className="lg:col-span-9">
-            <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-3xl md:text-4xl font-bold text-primary mb-10">
-              {t("services.title")}
-            </motion.h2>
-            <motion.div variants={containerVariants} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-              {services.map((service) => (
-                <motion.div key={service.href} variants={cardVariants}>
-                  <Link to={service.href} className="group block bg-background rounded-xl p-6 border border-border hover:border-accent/40 hover:shadow-lg transition-all duration-300 h-full">
-                    <service.icon className="h-8 w-8 text-accent mb-4" />
-                    <h3 className="font-semibold text-primary mb-2 group-hover:text-accent transition-colors">{service.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-4">{service.desc}</p>
-                    <span className="text-sm font-medium text-accent">{t("services.learnMore")}</span>
-                  </Link>
-                </motion.div>
+            <span className="section-label">{t("nav.services")}</span>
+            <StaggeredFade
+              text={t("services.title")}
+              as="h2"
+              className="text-3xl md:text-4xl font-bold text-primary mb-10 font-heading"
+              charDelay={0.03}
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+              {services.map((service, index) => (
+                <FadeInScale key={service.href} index={index} staggerDelay={0.08}>
+                  <TiltCard>
+                    <Link to={service.href} className="group block card-glass p-6 h-full">
+                      <div className="h-12 w-12 rounded-2xl bg-accent/10 flex items-center justify-center mb-4">
+                        <service.icon className="h-6 w-6 text-accent" />
+                      </div>
+                      <h3 className="font-semibold text-primary mb-2 group-hover:text-accent transition-colors font-heading">{service.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-4">{service.desc}</p>
+                      <span className="text-sm font-medium text-accent">{t("services.learnMore")}</span>
+                    </Link>
+                  </TiltCard>
+                </FadeInScale>
               ))}
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
     </section>
+  );
+};
+
+/** 3D perspective tilt wrapper */
+const TiltCard = ({ children }: { children: React.ReactNode }) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const handleMove = (e: MouseEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.transform = `perspective(800px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
+  };
+
+  const handleLeave = () => {
+    if (ref.current) ref.current.style.transform = "perspective(800px) rotateX(0) rotateY(0)";
+  };
+
+  return (
+    <div ref={ref} className="perspective-tilt" onMouseMove={handleMove} onMouseLeave={handleLeave}>
+      {children}
+    </div>
   );
 };
 

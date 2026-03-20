@@ -7,8 +7,11 @@ import ExpertiseCounters from "@/components/home/ExpertiseCounters";
 import Testimonials from "@/components/home/Testimonials";
 import Partners from "@/components/home/Partners";
 import ContactForm from "@/components/home/ContactForm";
+import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 
 const Index = () => {
+  useSmoothScroll();
+
   return (
     <Layout>
       <HeroSection />

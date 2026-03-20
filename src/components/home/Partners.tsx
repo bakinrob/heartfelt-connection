@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
 import { useI18n } from "@/lib/i18n";
+import FadeUpBlur from "@/components/animations/FadeUpBlur";
 
 const partners = [
   { src: "https://namaca.ca/wp-content/uploads/2024/09/xero-1.png", alt: "Xero" },
@@ -9,18 +9,35 @@ const partners = [
   { src: "https://namaca.ca/wp-content/uploads/2024/09/Ploto-black-png-logo-1.png", alt: "Ploto" },
 ];
 
+// Duplicate for seamless loop
+const allPartners = [...partners, ...partners, ...partners];
+
 const Partners = () => {
   const { t } = useI18n();
 
   return (
-    <section className="py-16 bg-card border-t border-border">
+    <section className="py-20 bg-card border-t border-border/50 overflow-hidden">
       <div className="container">
-        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-2xl md:text-3xl font-bold text-center text-primary mb-10">
-          {t("partners.title")}
-        </motion.h2>
-        <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16">
-          {partners.map((p, i) => (
-            <motion.img key={i} src={p.src} alt={p.alt} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="h-8 md:h-10 object-contain grayscale hover:grayscale-0 transition-all duration-300" loading="lazy" />
+        <FadeUpBlur>
+          <h2 className="text-2xl md:text-3xl font-bold text-center text-primary mb-10 font-heading">
+            {t("partners.title")}
+          </h2>
+        </FadeUpBlur>
+      </div>
+
+      {/* Infinite scroll */}
+      <div className="relative">
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-card to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-card to-transparent z-10 pointer-events-none" />
+        <div className="scroll-infinite">
+          {allPartners.map((p, i) => (
+            <img
+              key={i}
+              src={p.src}
+              alt={p.alt}
+              className="h-8 md:h-10 object-contain grayscale hover:grayscale-0 transition-all duration-300 mx-10 md:mx-16 shrink-0"
+              loading="lazy"
+            />
           ))}
         </div>
       </div>
