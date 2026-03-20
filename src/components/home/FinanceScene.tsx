@@ -1,6 +1,10 @@
 import { useRef, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, extend } from '@react-three/fiber';
 import * as THREE from 'three';
+
+// Extend Three.js Line_ to avoid conflict with SVG <line>
+extend({ Line_: THREE.Line });
+
 
 const NODE_COUNT = 32;
 
