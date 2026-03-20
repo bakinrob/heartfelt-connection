@@ -1,5 +1,7 @@
-import { motion } from "framer-motion";
 import { useI18n } from "@/lib/i18n";
+import StaggeredFade from "@/components/animations/StaggeredFade";
+import FadeUpBlur from "@/components/animations/FadeUpBlur";
+import FadeInScale from "@/components/animations/FadeInScale";
 
 const WhyChooseUsNumbered = () => {
   const { t } = useI18n();
@@ -14,29 +16,40 @@ const WhyChooseUsNumbered = () => {
   ];
 
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-24 md:py-32">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <div className="lg:sticky lg:top-24">
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">{t("whyNumbered.title")}</h2>
+            <span className="section-label">{t("whyNumbered.title")}</span>
+            <StaggeredFade
+              text={t("whyNumbered.title")}
+              as="h2"
+              className="text-3xl md:text-4xl font-bold text-primary mb-4 font-heading"
+              charDelay={0.03}
+            />
+            <FadeUpBlur delay={0.3}>
               <p className="text-muted-foreground leading-relaxed">{t("whyNumbered.subtitle")}</p>
-            </motion.div>
-            <div className="hidden lg:block mt-10">
-              <img src="https://namaca.ca/wp-content/uploads/2024/09/6782-1.png" alt="Why choose Namaca" className="rounded-2xl max-h-[500px] object-cover" loading="lazy" />
-            </div>
+            </FadeUpBlur>
+            <FadeInScale delay={0.4} className="hidden lg:block mt-10">
+              <img src="https://namaca.ca/wp-content/uploads/2024/09/6782-1.png" alt="Why choose Namaca" className="rounded-3xl max-h-[500px] object-cover shadow-card" loading="lazy" />
+            </FadeInScale>
           </div>
           <div className="space-y-0">
             {items.map((item, i) => (
-              <motion.div key={item.num} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="border-b border-border py-8 first:pt-0">
-                <div className="flex items-start gap-6">
-                  <span className="text-5xl font-bold text-accent/20 shrink-0 leading-none">{item.num}</span>
-                  <div>
-                    <h3 className="text-xl font-bold text-primary mb-2">{item.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed text-sm">{item.desc}</p>
+              <FadeUpBlur key={item.num} delay={i * 0.08}>
+                <div className="group border-b border-border py-8 first:pt-0 hover:pl-2 transition-all duration-300">
+                  <div className="flex items-start gap-6">
+                    <span className="text-5xl font-bold text-accent/20 group-hover:text-accent/40 shrink-0 leading-none transition-colors duration-300 font-heading">{item.num}</span>
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <div className="h-0 w-0 group-hover:w-6 group-hover:h-[2px] bg-accent transition-all duration-300 rounded-full" />
+                        <h3 className="text-xl font-bold text-primary mb-2 font-heading">{item.title}</h3>
+                      </div>
+                      <p className="text-muted-foreground leading-relaxed text-sm">{item.desc}</p>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
+              </FadeUpBlur>
             ))}
           </div>
         </div>
