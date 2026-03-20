@@ -23,7 +23,7 @@ const Navbar = () => {
   const toggleLang = () => setLang(lang === "fr" ? "en" : "fr");
 
   return (
-    <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border">
+    <header className="sticky top-0 z-50 navbar-glass border-b border-border/50">
       <div className="container flex items-center justify-between h-16">
         <Link to="/" className="flex items-center">
           <img
@@ -58,7 +58,7 @@ const Navbar = () => {
             </button>
             {servicesOpen && (
               <div className="absolute top-full left-0 pt-2" onMouseLeave={() => setServicesOpen(false)}>
-                <div className="bg-card rounded-lg shadow-lg border border-border py-2 min-w-[220px]">
+                <div className="card-glass py-2 min-w-[220px]">
                   {services.map((s) => (
                     <Link
                       key={s.href}
@@ -85,12 +85,12 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-3">
           <button
             onClick={toggleLang}
-            className="flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-accent transition-colors px-3 py-1.5 rounded-full border border-border hover:border-accent"
+            className="flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-accent transition-colors px-3 py-1.5 rounded-full border border-border/60 hover:border-accent/40"
           >
             <Globe className="h-3.5 w-3.5" />
             {lang === "fr" ? "EN" : "FR"}
           </button>
-          <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-6">
+          <Button asChild className="btn-glass text-accent border-accent/30 hover:bg-accent hover:text-accent-foreground">
             <a href="/#book-now">{t("nav.contact")}</a>
           </Button>
         </div>
@@ -101,7 +101,7 @@ const Navbar = () => {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden bg-card border-t border-border p-4 space-y-3">
+        <div className="md:hidden bg-card/95 backdrop-blur-lg border-t border-border/50 p-4 space-y-3">
           <Link to="/" className="block py-2 text-sm font-medium" onClick={() => setMobileOpen(false)}>{t("nav.home")}</Link>
           <Link to="/expertise" className="block py-2 text-sm font-medium" onClick={() => setMobileOpen(false)}>{t("nav.expertise")}</Link>
           <div>
