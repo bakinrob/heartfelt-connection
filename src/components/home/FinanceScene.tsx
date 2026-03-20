@@ -47,9 +47,11 @@ function Scene({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number
   const pOff = useMemo(() => Array.from({ length: PARTICLE_COUNT }, () => Math.random()), []);
   const pRef = useRef<THREE.Points>(null);
 
-  const lineGeos = useMemo(() => edges.map(([a, b]) =>
-    new THREE.BufferGeometry().setFromPoints([nodes[a], nodes[b]])
-  ), [edges, nodes]);
+  const lineObjects = useMemo(() => edges.map(([a, b]) => {
+    const geo = new THREE.BufferGeometry().setFromPoints([nodes[a], nodes[b]]);
+    const mat = new THREE.LineBasicMaterial({ color: '#EA7600', transparent: true, opacity: 0.12 });
+    return new THREE.Line(geo, mat);
+  }), [edges, nodes]);
 
   const starPositions = useMemo(() => {
     const p = new Float32Array(1800);
