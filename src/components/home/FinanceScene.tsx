@@ -117,10 +117,8 @@ function Scene({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number
 
       <group ref={groupRef}>
         {/* Connection lines */}
-        {lineGeos.map((geo, i) => (
-          <line key={i} geometry={geo}>
-            <lineBasicMaterial color="#EA7600" transparent opacity={0.12} />
-          </line>
+        {lineObjects.map((lineObj, i) => (
+          <primitive key={i} object={lineObj} />
         ))}
         {/* Hub node */}
         <mesh ref={hubRef} position={[0, 0, 0]}>
